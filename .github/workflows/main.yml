@@ -38,3 +38,20 @@ jobs:
       - name: Run my unittest
         run:
           pytest
+
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+  - uses: mr-smithers-excellent/docker-build-push@v5
+    name: Build & push Docker image
+    with:
+      image: repo/image
+      tags: v1, latest
+      registry: registry-url.io
+      dockerfile: Dockerfile.ci
+      username: ${{ secrets.DOCKER_USERNAME }}
+      password: ${{ secrets.DOCKER_PASSWORD }}
