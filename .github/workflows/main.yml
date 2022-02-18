@@ -59,7 +59,7 @@ jobs:
 
   deploy:
     needs: docker
-    step:
+    steps:
 
     - name: AWS SSM Send-Command
       uses: peterkimzz/aws-ssm-send-command@master
