@@ -56,3 +56,19 @@ jobs:
         dockerfile: flask/Dockerfile
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  deploy:
+    needs: docker
+    step:
+
+    - name: AWS SSM Send-Command
+      uses: peterkimzz/aws-ssm-send-command@master
+      id: ssm
+      with:
+        aws-region: ap-northeast-2
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        instance-ids: ${{ secrets.INSTANCE_ID }}
+
+        command: docker rm -f my-flask-app && docker pull lovehyun/flask-app-auto:latest && docker run --rm -d --name my-flask-app -p 8000:5000 lovehyun/flask-app-auto:latest
+        comment: update my docker service
