@@ -71,5 +71,9 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         instance-ids: ${{ secrets.INSTANCE_ID }}
 
-        command: docker rm -f my-flask-app && docker pull lovehyun/flask-app-auto:latest && docker run --rm -d --name my-flask-app -p 8000:5000 lovehyun/flask-app-auto:latest
+        command: sudo docker rm -f my-flask-app && sudo docker pull lovehyun/flask-app-auto:latest && sudo docker run --rm -d --name my-flask-app -p 8000:5000 lovehyun/flask-app-auto:latest
         comment: update my docker service
+
+    # Catch SSM outputs
+    - name: Get the outputs
+      run: echo "The Command id is ${{ steps.ssm.outputs }}"
