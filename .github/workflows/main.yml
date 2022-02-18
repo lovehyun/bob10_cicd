@@ -9,19 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.7, 3.8]
 
     steps:
-
       # 우리코드 체크아웃(가상머신에 우리코드 다운로드 (git clone))
-      - uses: actions/checkout@v2
-
-      # 우리코드를 돌릴것임
-      - name: Run pwd
-        run: pwd
-      - name: Check directory
-        run: ls -al
-
+      - name: Checkout my code
+        uses: actions/checkout@v2
 
       # 필요 환경/프레임워크/언어 설치
       - name: Setup python
